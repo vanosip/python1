@@ -10,29 +10,42 @@
 
 print("Specify the name (path) of the file")
 name_file = input()
+symbol_dict = {}
 try:
     with open(name_file, 'r', encoding='utf-8') as file:
-        text = list(file.readlines())
+        text = file.readlines()
 except FileNotFoundError:
     print("The specified file was not found or an error occurred when opening it")
+if len(text) == 0:
+    print('The file is empty')
+    exit(0)
 text = [x.lower() for x in text]
-basis = set()
-for x in text:
-    basis = basis.union(set(x))
-
-basis.remove(' ')
-basis.remove('\n')
-dict_symbols = []
-for i in basis:
-    t = 0
-    for g in text:
-        t += g.count(i)
-    dict_symbols.append([i, t])
-with open('res.txt', 'w', encoding='utf-8') as file:
-    for i in dict_symbols:
-        if (i[0] == ' '):
-            file.write(' '+':'+str(i[1])+'\n')
+for i in range(len(text)):
+    for symbol in text[i]:
+        if symbol == '\n' or symbol ==' ':
+            continue
+        if symbol in symbol_dict:
+            symbol_dict[symbol] += 1
         else:
-            file.write(i[0]+':'+str(i[1])+'\n')
-print("The result has been successfully written to a file res.txt")
+            symbol_dict[symbol] = 1
+if len(symbol_dict) == 0:
+    print('The file is empty')
+    exit(0)
 
+
+# basis = set()
+# for x in text:
+#     basis = basis.union(set(x))
+#
+# basis.remove(' ')
+# basis.remove('\n')
+# dict_symbols = []
+# for i in basis:
+#     t = 0
+#     for g in text:
+#         t += g.count(i)
+#     dict_symbols.append([i, t])
+with open('res.txt', 'w', encoding='utf-8') as file:
+    for symbol,count_symbol in symbol_dict.items():
+        file.write(f'{symbol}:{count_symbol}\n')
+print("The result has been successfully written to a file res.txt")
