@@ -22,7 +22,7 @@ if len(text) == 0:
 text = [x.lower() for x in text]
 for i in range(len(text)):
     for symbol in text[i]:
-        if symbol == '\n' or symbol ==' ':
+        if symbol == '\n' or symbol == '':
             continue
         if symbol in symbol_dict:
             symbol_dict[symbol] += 1
@@ -31,7 +31,6 @@ for i in range(len(text)):
 if len(symbol_dict) == 0:
     print('The file is empty')
     exit(0)
-
 
 # basis = set()
 # for x in text:
@@ -46,6 +45,6 @@ if len(symbol_dict) == 0:
 #         t += g.count(i)
 #     dict_symbols.append([i, t])
 with open('res.txt', 'w', encoding='utf-8') as file:
-    for symbol,count_symbol in symbol_dict.items():
+    for symbol, count_symbol in symbol_dict.items():
         file.write(f'{symbol}:{count_symbol}\n')
 print("The result has been successfully written to a file res.txt")
